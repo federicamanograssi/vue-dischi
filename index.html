@@ -25,12 +25,21 @@
     <!-- MAIN------ -->
     <main>
         <div class="container-wrapped" id="root">
-            <div v-for='album in albumList'class="card">
-                <img :src="album.poster" :alt="album.title">
-                <h2 class="title">{{album.title}}</h2>
-                <p>{{album.author}}</p>
-                <p class="year">{{album.year}}</p>
-            </div>    
+            <div id="select_section">
+                <label for="genre_filter"></label>
+                <select name="genre_filter" id="genre_filter">
+                    <option value="">All</option>
+                    <option v-for="(genre, index) in genreList" :value="genreList[index]">{{genreList[index]}}</option>
+                </select>
+            </div>
+            <div id="disc_section">
+                <div v-for='album in albumList'class="card">
+                    <img :src="album.poster" :alt="album.title">
+                    <h2 class="title">{{album.title}}</h2>
+                    <p>{{album.author}}</p>
+                    <p class="year">{{album.year}}</p>
+                </div>    
+            </div>
 
         </div>
     </main>

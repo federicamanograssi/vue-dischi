@@ -2,14 +2,24 @@
 var app = new Vue({
     el:'#root',
     data :{
-        albumList :[]
+        albumList :[],
+        genreList :[]
     },
     mounted(){
             axios
                 .get('https://flynn.boolean.careers/exercises/api/array/music')
                 .then((discList)=>{
+
+                    // crea lista album-------
                     this.albumList = discList.data.response;
-                    console.log(this.albumList)
+                    // console.log(discList.data.response);
+
+                    // estrai generi da lista album---------
+                    for( let i=0;i<this.albumList.length;i++){
+                        if(!this.genreList.includes(this.albumList[i].genre))
+                        this.genreList.push(this.albumList[i].genre)
+                    };
+                    // console.log(this.genreList)
                 })
     }
 })
