@@ -3,7 +3,8 @@ var app = new Vue({
     el:'#root',
     data :{
         albumList :[],
-        genreList :[]
+        genreList :[],
+        activeGenre:'-1'
     },
     mounted(){
             axios
@@ -19,24 +20,30 @@ var app = new Vue({
                         if(!this.genreList.includes(this.albumList[i].genre))
                         this.genreList.push(this.albumList[i].genre)
                     };
-                    // console.log(this.genreList)
+                    this.genreList.sort()
                 })
+    },
+    methods:{
+        onChangeFilter(){
+            // BONUS: Creare una select con tutti i generi dei dischi. In base a cosa scegliamo nella select, vedremo i corrispondenti cd.
+            axios
+                .get('https://flynn.boolean.careers/exercises/api/array/music')
+                .then((discList)=>{
+                    this.albumList =[]
+                    if(this.activeGenre == "All"){
+                        this.albumList = discList.data.response;
+                    } else {
+                        this.albumList = discList.data.response.filter((disc)=>{
+                            return disc.genre == this.activeGenre
+                        })
+                    }
+
+                    // BONUS 2: Ordinare i dischi per anno di uscita.
+                    this.albumList.sort(function(a,b){
+                        return a.year - b.year
+                    })
+                })
+        }
     }
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// BONUS: Creare una select con tutti i generi dei dischi. In base a cosa scegliamo nella select, vedremo i corrispondenti cd.
-// BONUS 2: Ordinare i dischi per anno di uscita.

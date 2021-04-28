@@ -25,13 +25,17 @@
     <!-- MAIN------ -->
     <main>
         <div class="container-wrapped" id="root">
+
+            <!-- SELECT SECTION--------- -->
             <div id="select_section">
                 <label for="genre_filter"></label>
-                <select name="genre_filter" id="genre_filter">
-                    <option value="">All</option>
+                <select name="genre_filter" id="genre_filter" v-model="activeGenre" @change="onChangeFilter()">
+                    <option value="All">All</option>
                     <option v-for="(genre, index) in genreList" :value="genreList[index]">{{genreList[index]}}</option>
                 </select>
             </div>
+
+            <!-- DISC SECTION----------- -->
             <div id="disc_section">
                 <div v-for='album in albumList'class="card">
                     <img :src="album.poster" :alt="album.title">
